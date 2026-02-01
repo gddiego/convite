@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Special Invitation 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #f06292, #8e44ad);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+}
+
+.container {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 25px;
+}
+
+.button {
+    background: #ff91b2;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+.button:hover {
+    background: #ff6a99;
+    transform: scale(1.05);
+}
+
+.hidden {
+    display: none;
+}
+
+.question {
+    font-size: 1.5em;
+    margin-bottom: 25px;
+}
+
+.result {
+    font-size: 1.4em;
+    line-height: 1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="intro">
+        <h1>Hi 💖</h1>
+        <p>I have something special for you.<br>Let’s get to know you a little better first ✨</p>
+        <button class="button" onclick="startQuiz()">Start</button>
+    </div>
+
+    <div id="quiz" class="hidden">
+        <div class="question" id="questionText"></div>
+        <button class="button" onclick="answer(true)">Yes</button>
+        <button class="button" onclick="answer(false)">No</button>
+    </div>
+
+    <div id="final" class="hidden">
+        <h1>Your Profile 💫</h1>
+        <p class="result" id="resultText"></p>
+    </div>
+
+</div>
+
+<script>
+const questions = [
+    { text: "Are you a calm person?", key: "calm" },
+    { text: "Are you an attentive person?", key: "attentive" },
+    { text: "Do you like hugs and surprises?", key: "affectionate" },
+    { text: "Do you enjoy sharing moments together?", key: "sharing" },
+    { text: "Do you like traveling?", key: "travel" },
+    { text: "Do you consider yourself an honest person?", key: "honest" },
+    { text: "Are you looking for a serious relationship?", key: "serious" }
+];
+
+let current = 0;
+let answers = {};
+
+function startQuiz() {
+    document.getElementById("intro").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+    loadQuestion();
+}
+
+function loadQuestion() {
+    document.getElementById("questionText").innerText = questions[current].text;
+}
+
+function answer(value) {
+    answers[questions[current].key] = value;
+    current++;
+
+    if (current < questions.length) {
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("final").classList.remove("hidden");
+
+    const standards = [
+        answers.calm,
+        answers.attentive,
+        answers.affectionate,
+        answers.sharing,
+        answers.travel,
+        answers.honest,
+        answers.serious
+    ];
+
+    const passed = standards.every(v => v === true);
+
+    let message = "";
+
+    if (passed) {
+        message = `
+        Based on your answers, you are a caring, attentive, sincere person who enjoys sharing moments, traveling,
+        and is looking for something real.<br><br>
+        Diego would love to go on a date with you 💖<br>
+        How about we talk and plan something special together? 😉
+        `;
+    } else {
+        message = `
+        Thank you for answering honestly 💫<br><br>
+        Based on your answers, maybe we are not looking for the same things right now.
+        But if you’d like, you can always talk to me personally and we can get to know each other better 💬
+        `;
+    }
+
+    document.getElementById("resultText").innerHTML = message;
+}
+</script>
+
+</body>
+</html>
